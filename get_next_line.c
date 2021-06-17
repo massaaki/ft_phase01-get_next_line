@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <string.h> //temporary
-#include <fcntl.h>
-#include <stdlib.h>
-#include <sys/fcntl.h>
-#include <unistd.h>
+#include "get_next_line.h"
+
 int get_next_line(int fd, char **line)
 {
 	char buffer[100 + 1];
