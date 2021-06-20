@@ -14,18 +14,17 @@
 ** -1: Error
 */
 
-int	get_next_line(int fd, char **line)
+#include <stdio.h>
+
+int get_next_line(int fd, char **line)
 {
 	char	buffer[BUFFER_SIZE + 1];
-	char	*current_line;
 
-	current_line = NULL;
-	
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	
 
+	if(read(fd, buffer, BUFFER_SIZE) > 0)
+		printf("\"%s\"", buffer);
 
-	
 	return (0);
 }
