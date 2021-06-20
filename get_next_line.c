@@ -1,26 +1,31 @@
-#include <stdio.h>
-#include <string.h> //temporary
 #include "get_next_line.h"
 
-int get_next_line(int fd, char **line)
+/*
+** Description:
+** Function which a new line read a file descriptor
+** 
+** Parameters:
+** fd: File descriptor
+** **line: value to read
+**
+** Returns:
+** 1: if a line has been read
+** 0: EOF reached
+** -1: Error
+*/
+
+int	get_next_line(int fd, char **line)
 {
-	char buffer[100 + 1];
+	char	buffer[BUFFER_SIZE + 1];
+	char	*current_line;
 
-	read(fd, &buffer, 100);
-	buffer[100] = '\0';
-	*line = strdup(buffer);
+	current_line = NULL;
+	
+	if (fd < 0 || !line || BUFFER_SIZE <= 0)
+		return (-1);
+	
 
-	return (0);
-}
 
-int	main(void)
-{
-	char	*line;
-	int fd;
-
-	fd = open("sample.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	close(fd);
+	
 	return (0);
 }
