@@ -1,24 +1,25 @@
 #include "get_next_line.h"
 
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
+
 
 int main(void)
 {
-	int fd;
-	const int READ_ONLY = 0;
+	FILE *file;
+	int i;
+	char *current_line;
 
-	fd = open("test-file.txt", READ_ONLY);
-	if (fd == -1)
-	{	
-		return 1;
+	i = 0;
+	file = fopen("./test-file.txt", "r");
+
+	while ((current_line = get_next_line(file->_file)) != NULL)
+	{
+		printf("Line %i : %s", i, current_line);
+		i++;
 	}
 
-	get_next_line(fd);
-
+	fclose(file);
 
 	return (0);
 }
