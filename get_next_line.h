@@ -6,4 +6,5 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+char	*ft_strchr(const char *s, int c);
 #endif
