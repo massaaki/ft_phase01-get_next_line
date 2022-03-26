@@ -4,28 +4,39 @@
 
 char *get_next_line(int fd)
 {
-	char buffer[BUFFER_SIZE + 1];
+	char *buffer;
 	int file_return;
+	static char *rest;
+	char *current_line;
+
+	/**
+	 * ft_strdup allocates sufficient memory for a copy of the string
+	 **/
 
 	// If successful, the number of bytes actually read is returned
 	// EOF, returns 0
 	// Fail, returns -1
 
-	/*
-	 * file_return = read(fd, buffer, BUFFER_SIZE);
-	 * if EOF retuns 0, we can put read in a while loop
-	 */
+	if (!rest)
+		rest = ft_strdup("");
+	
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	current_line = ft_strdup(rest);
 
-	while ((file_return = read(fd, buffer, BUFFER_SIZE)) > 0) 
+	/*
+	* file_return = read(fd, buffer, BUFFER_SIZE);
+	* if EOF retuns 0, we can put read in a while loop
+	*/
+
+	while ((file_return = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
-		//if entered here, means that we have more buffer
+		// if entered here, means that we have more buffer
 		buffer[file_return] = '\0'; // ensure end of string
 		printf("BUFF: %s\n", buffer);
 
-
-
 		char *rest_after = ft_strchr(buffer, '\n');
-		if(rest_after != NULL) {
+		if (rest_after != NULL)
+		{
 			rest_after = rest_after + 1;
 		}
 		printf("rest_after : %s\n", rest_after);
