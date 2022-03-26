@@ -7,4 +7,5 @@
 #include <unistd.h>
 
 char	*ft_strchr(const char *s, int c);
+int get_next_line(int fd);
 #endif
