@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-int get_next_line(int fd)
+char *get_next_line(int fd)
 {
 	char buffer[BUFFER_SIZE + 1];
 	int file_return;
@@ -21,9 +21,18 @@ int get_next_line(int fd)
 		//if entered here, means that we have more buffer
 		buffer[file_return] = '\0'; // ensure end of string
 		printf("BUFF: %s\n", buffer);
+
+
+
+		char *rest_after = ft_strchr(buffer, '\n');
+		if(rest_after != NULL) {
+			rest_after = rest_after + 1;
+		}
+		printf("rest_after : %s\n", rest_after);
+
 		printf("*******************\n");
 	}
 
 		
-	return (0);
+	return NULL;
 }
