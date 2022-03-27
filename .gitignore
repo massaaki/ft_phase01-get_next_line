@@ -2,3 +2,5 @@
 *.out
 *.o
 .editorconfig
+commented-code/
+venv
