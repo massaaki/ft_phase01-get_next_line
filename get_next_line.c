@@ -6,16 +6,15 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/03/28 17:28:12 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:22:03 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "get_next_line.h"
-#include <stdio.h>
 
-char *split_line(char *start, char *end);
+char *ft_split_n(char **accumulator, char *end, int last_line);
 
+int test = 0;
 
 char *get_next_line(int fd)
 {
@@ -24,7 +23,7 @@ char *get_next_line(int fd)
 	static char		*accumulator;
 	char 			*current_line;
 	char 			*ptr_n;
-	int length;
+	int 			length;
 
 	if (!accumulator)
 		accumulator = ft_strdup("");
@@ -33,87 +32,68 @@ char *get_next_line(int fd)
 
 	file_return = BUFFER_SIZE;
 	while(file_return > 0) {
+		
+		// Ensure buffer has a \0
+		current_buffer[BUFFER_SIZE] = '\0';
+
 		// EOF retuns 0
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 
 		// Verify if file_return is eof(zero)
 		if(file_return > 0)
 		{
-
 			accumulator = ft_strjoin(accumulator, current_buffer);
 
-			ptr_n = ft_strchr(accumulator, '-');
-			printf("accumultor: %s\n", accumulator);
+			ptr_n = ft_strchr(accumulator, '\n');
 			if (ptr_n)
 			{
-				printf("achou %s\n", ptr_n);
-				// 	// Found'\n'
-				// 	// printf("ACC: %s\n", accumulator);
-				// 	printf("ptr_n: %s\n", ptr_n);
-				current_line = split_line(accumulator, ptr_n);
-				printf("line: %s\n", current_line);
-
-				// 	printf("ACC: %s\n", accumulator);
-				// 	// printf("ptr_n: %s\n", ptr_n);
-				// 	printf("***********************\n");
-				// 	if ((ft_strlen(ptr_n) - 1) > 0)
-				// 	{
-				// 		//tem resto
-
-				// 		length = ft_strlen(ptr_n);
-				// 		printf("TEM RESTO %s\n", ptr_n);
-				// 	}
-				// 	else
-				// 	{
-				// 		free(accumulator);
-				// 		accumulator = ft_strdup("");
-				// 	}
-
-				// 	//update accumulator
-
-				// 	return current_line;
+				current_line = ft_split_n(&accumulator, ptr_n, 0);
+				return (current_line);
 			}
-
-			// printf("current_buffer: %s\n", current_buffer);
-			// printf("accumulator: %s\n", accumulator);
-			// printf("ptr_n: %s\n", ptr_n);
-			// printf("***********************\n");
+		}
+		// print last rest if found
+		else if (file_return == 0 && ft_strlen(accumulator) > 0)
+		{
+			current_line = ft_split_n(&accumulator, ptr_n, 1);
+			return (current_line);
 		}
 	}
-
 
 	return (NULL);
 }
 
 // return line1 and rest
-char * split_line(char *start, char *end)
+char * ft_split_n(char **accumulator, char *end, int last_line)
 {
 	char *line;
-	char *rest;
-	int length;
+	int len = ft_strlen(*accumulator);
+	char *temp_accumulator;
 	int i;
 
-	*end = '\0';
-	length = ft_strlen(start);
-	*end = '-';
-
-	line = malloc((length + 1) * sizeof(line));
 	i = 0;
-	while (i < length)
+	// generate the line
+	while (*(*accumulator + i) != '\0')
 	{
-		line[i] = *start;
-		// *start = 'Z';
-		start++;
+		if (*(*accumulator + i) == '\n')
+		{
+			line = malloc(i * sizeof(char) + 1);
+			ft_strlcpy(line, *accumulator, i + 1);
+			break;
+		}
+		else if (last_line == 1)
+		{
+			line = malloc(ft_strlen(*accumulator) * sizeof(char) + 1);
+			ft_strlcpy(line, *accumulator, ft_strlen(*accumulator) + 1);
+			*accumulator = malloc(1);
+		}
 		i++;
 	}
-	start++;
-	line[i] = '\0';
-	
-	// printf("START %s\n", start);
-	// rest = ft_strdup(start);
-	// ft_strlcpy(rest, start, length+1);
-	// printf("rest %s\n", rest);
-	// printf("***********************\n");
+
+	// generate the rest
+	temp_accumulator = malloc((len - i) * sizeof(char));
+	ft_strlcpy(temp_accumulator, *(accumulator) + i + 1, (len - i + 1));
+	*accumulator = malloc(len - i * sizeof(char));
+	ft_strlcpy(*accumulator, temp_accumulator, len - i + 1);
+
 	return line;
 }
-// return line1 and rest
