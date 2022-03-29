@@ -10,7 +10,7 @@ int main(void)
 	char *current_line;
 
 	i = 0;
-	file = fopen("./test-file2.txt", "r");
+	file = fopen("./test-file.txt", "r");
 
 	while ((current_line = get_next_line(file->_file)) != NULL)
 	{

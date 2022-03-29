@@ -1,5 +1,5 @@
 all: 
-		cc -c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=2
+		cc -c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=5
 		cc get_next_line.o get_next_line_utils.o main.c 
 		./a.out
 		# cc -Wall -Werror -Wextra -c get_next_line.c -o get_next_line.o
