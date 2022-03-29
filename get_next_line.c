@@ -6,15 +6,13 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/03/29 15:22:03 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:24:57 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 char *ft_split_n(char **accumulator, char *end, int last_line);
-
-int test = 0;
 
 char *get_next_line(int fd)
 {
