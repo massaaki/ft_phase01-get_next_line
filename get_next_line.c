@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_split_n(char **accumulator, char *end, int last_line);
+char	*ft_split_n(char **accumulator, int last_line);
 
 char	*get_next_line(int fd)
 {
@@ -29,20 +29,20 @@ char	*get_next_line(int fd)
 	while (file_return > 0)
 	{
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
-		if (file_return >= 0)
+		if (file_return > 0)
 		{
 			accumulator = ft_strjoin(accumulator, current_buffer);
 			ptr_n = ft_strchr(accumulator, '\n');
 			if (ptr_n)
 			{
-				current_line = ft_split_n(&accumulator, ptr_n, 0);
+				current_line = ft_split_n(&accumulator, 0);
 				free(current_buffer);
 				return (current_line);
 			}
 		}
 		else if (file_return == 0 && ft_strlen(accumulator) > 0)
 		{
-			current_line = ft_split_n(&accumulator, ptr_n, 1);
+			current_line = ft_split_n(&accumulator, 1);
 			free(current_buffer);
 			return (current_line);
 		}
@@ -51,7 +51,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-char	*ft_split_n(char **accumulator, char *end, int last_line)
+char	*ft_split_n(char **accumulator, int last_line)
 {
 	char	*line;
 	int		len;
