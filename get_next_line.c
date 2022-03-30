@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/03/30 11:08:29 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/03/30 16:52:00 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ char *get_next_line(int fd)
 	if (!accumulator)
 		accumulator = ft_strdup("");
 	current_buffer = malloc((BUFFER_SIZE + 1) * sizeof(current_buffer));
+
 	file_return = BUFFER_SIZE;
 	while (file_return > 0)
 	{
-
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		current_buffer[file_return] = '\0';
-		
-		if (file_return > 0)
+
+		if (file_return > 0 || ft_strchr(accumulator, '\n'))
 		{	
 			accumulator = ft_strjoin(accumulator, current_buffer);
-
 			ptr_n = ft_strchr(accumulator, '\n');
 			if (ptr_n)
 			{
@@ -77,8 +76,8 @@ char	*ft_split_n(char **accumulator, int last_line)
 		if (*(*accumulator + i) == '\n')
 		{
 			line = malloc(i * sizeof(char) + 1 + 1);
-			ft_strlcpy(line, *accumulator, i + 1 + 1); //to consider '\n'
-			break ;
+			ft_strlcpy(line, *accumulator, i + 1 + 1);
+			break;
 		}
 		else if (last_line == 1)
 		{
@@ -88,11 +87,10 @@ char	*ft_split_n(char **accumulator, int last_line)
 		}
 		i++;
 	}
-
 	temp_accumulator = malloc((len - i) * sizeof(char));
 	ft_strlcpy(temp_accumulator, *(accumulator) + i + 1, (len - i + 1));
 	*accumulator = malloc(len - i * sizeof(char));
-	ft_strlcpy(*accumulator, temp_accumulator, len - i + 1);
+	ft_strlcpy(*accumulator, temp_accumulator, ft_strlen(temp_accumulator) + 1);
 	free(temp_accumulator);
 	return (line);
 }
