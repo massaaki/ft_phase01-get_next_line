@@ -7,7 +7,7 @@ void testGnl(char *file_path, char *test_name);
 
 int main(void)
 {
-	testGnl("./file-tests/41_no_nl", "41_no_nl");
+	// testGnl("./file-tests/41_no_nl", "41_no_nl");
 	testGnl("./file-tests/41_with_nl", "41_with_nl");
 	// testGnl("./file-tests/42_no_nl", "42_no_nl");
 	// testGnl("./file-tests/42_with_nl", "42_with_nl");
@@ -15,6 +15,7 @@ int main(void)
 	// testGnl("./file-tests/43_with_nl", "43_with_nl");
 	// testGnl("./file-tests/alternate_line_nl_no_nl", "alternate_line_nl_no_nl");
 	// testGnl("./file-tests/alternate_line_nl_with_nl", "alternate_line_nl_with_nl");
+	// testGnl("./file-tests/random", "random");
 	// testGnl("./file-tests/big_line_no_nl", "big_line_no_nl");
 	// testGnl("./file-tests/big_line_with_nl", "big_line_with_nl");
 	// testGnl("./file-tests/empty", "empty");
@@ -37,18 +38,20 @@ void testGnl(char *file_path, char *test_name)
 	printf("----------------------------------------------------------\n");
 	printf("-> TEST #01 - %s\n", test_name);					
 	printf("----------------------------------------------------------\n");
-	i = 0;
-	// file = fopen("./file-tests/41_no_nl", "r");
-	file = fopen(file_path, "r");
 
+	i = 0;
+	file = fopen(file_path, "r");
+	
+	//use first line in linux
+	// while ((current_line = get_next_line(file->_fileno)) != NULL)
 	while ((current_line = get_next_line(file->_file)) != NULL)
 	{
-		printf("Line %i : %s\n", i, current_line);
+		printf("Line %i : '%s'\n", i, current_line);
+		free(current_line);
 		i++;
 	}
 
 	fclose(file);
-	
 	printf("\n");
 	printf("\n");
 }
