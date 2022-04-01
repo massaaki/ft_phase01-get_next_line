@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/01 19:55:57 by massaaki          #+#    #+#             */
+/*   Updated: 2022/04/01 19:57:10 by massaaki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 /*
 *	find the first ocurrency of 'c' and returns
 *	a pointer of str found or null
 */
-
 char	*ft_strchr(const char *s, int c)
 {
 	size_t	i;
@@ -23,9 +34,9 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t cont;
+	size_t	cont;
 
 	cont = 0;
 	while (s[cont] != '\0')
@@ -33,12 +44,12 @@ size_t ft_strlen(const char *s)
 	return (cont);
 }
 
-size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t i;
+	size_t	i;
 
 	if (src == NULL)
-		return ((size_t)NULL);
+		return ((size_t) NULL);
 	if (dstsize < 1)
 		return (ft_strlen(src));
 	i = 0;
@@ -57,9 +68,9 @@ size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
  * return a pointer to it
  * Dependences: ft_strlen, ft_strlcpy
  **/
-char *ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
-	char *str;
+	char	*str;
 
 	str = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char));
 	if (str == NULL)
@@ -73,12 +84,12 @@ char *ft_strdup(const char *s1)
  * join str1 and str2
  **/
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t i;
-	size_t j;
-	char *dest;
-	size_t total_size;
+	size_t	i;
+	size_t	j;
+	char	*dest;
+	size_t	total_size;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
