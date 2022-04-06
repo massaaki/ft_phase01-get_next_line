@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/06 17:18:46 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:51:45 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ char *get_next_line(int fd)
 		accumulator->buffer[0] = '\0';
 		accumulator->fd = fd;
 		accumulator->next = NULL;
-	} else {
+	} else
 		update_list(&accumulator, fd);
-	}
 	current = accumulator;
+
 	while(current->fd != fd)
 		current = current->next;
 
@@ -138,9 +138,11 @@ char *ft_split_n(char **accumulator, char *ptr_n, int file_return)
 	char *line;
 	char *rest;
 
-	if (file_return == 0) {
+	if (file_return == 0 && !ft_strchr(*accumulator, '\n'))
+	{
 		line = malloc(ft_strlen(*accumulator) * sizeof(char) + 1);
 		ft_strlcpy(line, *accumulator, ft_strlen(*accumulator) + 1);
+		
 		free(*accumulator);
 		*accumulator = malloc(sizeof(char));
 		*accumulator[0] = '\0';
