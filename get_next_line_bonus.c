@@ -6,14 +6,14 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/05 21:43:01 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/05 21:50:02 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <stdio.h>
 
-void update_list(struct list **accumulator, int fd, char *buffer);
+void update_list(struct list **accumulator, int fd);
 void ft_join_accumulator(char **accumulator, char *current_buffer);
 void delete_fd(struct list **accumulator, int fd);
 
@@ -21,7 +21,8 @@ char *get_next_line(int fd)
 {
 	char				current_buffer[BUFFER_SIZE + 1];
 	static struct list	*accumulator;
-	int					file_return;
+	struct list 		*current;
+	int file_return;
 	char				*current_line;
 
 	if (!accumulator)
@@ -31,36 +32,33 @@ char *get_next_line(int fd)
 		accumulator->buffer[0] = '\0';
 		accumulator->fd = fd;
 		accumulator->next = NULL;
-		printf("started: %d\n", accumulator->fd);
 	} else {
-		update_list(&accumulator, fd, "");
+		update_list(&accumulator, fd);
 	}
-	// current_line = add(&accumulator, fd, current_buffer);
-	// printf("current line..: '%s'\n", current_line);
+	current = accumulator;
+	while( current->fd != fd)
+		current = current->next;
 
 	file_return = BUFFER_SIZE;
-	// while (file_return > 0 || ft_strchr(accumulator->buffer, '-'))
 	while (file_return > 0)
 	{
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		current_buffer[file_return] = '\0';
-		ft_join_accumulator(&(accumulator->buffer), current_buffer);
+		ft_join_accumulator(&(current->buffer), current_buffer);
 
 		printf("FD: %d\n", fd);
-		printf("buffer..:'%s'\n", current_buffer);
-		printf("accumulator: '%s'\n", accumulator->buffer);
+		printf("accumulator: '%s'\n", current->buffer);
 		printf("-------\n");
 
-		if (ft_strchr(accumulator->buffer, '-'))
+		if (ft_strchr(current->buffer, '-'))
 		{
+			// SPLIT HERE
 			break;
 		}
 	}
 
 	if(file_return == 0)
-	{
 		delete_fd(&accumulator, fd);
-	}
 	return (NULL);
 }
 
@@ -84,7 +82,7 @@ void delete_fd(struct list **accumulator, int fd)
 	free(to_exclude);
 }
 
-void update_list(struct list **accumulator, int fd, char *buffer)
+void update_list(struct list **accumulator, int fd)
 {
 	struct list *current;
 	struct list *new;
@@ -108,7 +106,6 @@ void update_list(struct list **accumulator, int fd, char *buffer)
 		new->fd = fd;
 		new->next = (*accumulator);
 		(*accumulator) = new;
-		printf("created: %d\n", new->fd);
 	}
 }
 
