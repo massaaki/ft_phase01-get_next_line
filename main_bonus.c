@@ -34,7 +34,7 @@ void testBonus(void)
 
 	current_line1 = get_next_line(file1->_file);
 	// current_line1 = get_next_line(file1->_file);
-
+	current_line2 = get_next_line(file2->_file);
 
 	fclose(file1);
 	fclose(file2);

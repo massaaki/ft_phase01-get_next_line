@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/05 21:50:02 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/05 21:55:33 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ char *get_next_line(int fd)
 
 		if (ft_strchr(current->buffer, '-'))
 		{
-			// SPLIT HERE
+			/*
+			 * TODO:
+			 * 1 - Split '-'
+			 * 2 - return content before '-'
+			 * 3 - realloc and keep content after '-'
+			 */
 			break;
 		}
 	}
