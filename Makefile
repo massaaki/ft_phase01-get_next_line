@@ -4,6 +4,12 @@ all:
 		./a.out
 		# cc -Wall -Werror -Wextra -c get_next_line.c -o get_next_line.o
 
+bonus:
+		cc get_next_line_bonus.c get_next_line_utils_bonus.c -D BUFFER_SIZE=4 \
+		main_bonus.c -g
+		./a.out
+		@rm -rf a.out
+
 clean:
 		rm -rf get_next_line.o get_next_line_utils.o
 
