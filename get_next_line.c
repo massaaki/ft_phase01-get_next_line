@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/08 18:34:55 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:48:10 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ char	*get_next_line(int fd)
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		current_buffer[file_return] = '\0';
 		ft_join_accumulator(&accumulator, current_buffer);
+
 		if (ft_manage_split(&accumulator, &current_line, file_return) == 1)
 			return (current_line);
-
 	}
 	free(accumulator);
 	accumulator = NULL;
@@ -56,7 +56,7 @@ char	*ft_split_n(char **accumulator, int last_line)
 
 	i = 0;
 	len = ft_strlen(*accumulator);
-	while ((*accumulator)[i] != '\0')
+	while ((ft_strlen(*accumulator) != 0) && (*(*accumulator + i) != '\0'))
 	{
 		if ((*accumulator)[i] == '\n')
 		{
@@ -70,7 +70,6 @@ char	*ft_split_n(char **accumulator, int last_line)
 			ft_strlcpy(line, *accumulator, len + 1);
 			free(*accumulator);
 			*accumulator = ft_strdup("");
-			break;
 		}
 		i++;
 	}
