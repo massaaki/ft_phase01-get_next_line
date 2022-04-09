@@ -6,13 +6,12 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/08 22:13:29 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 15:00:31 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <stdio.h>
-#define LETTER '\n'
 
 void update_list(struct list **accumulator, int fd);
 void ft_join_accumulator(char **accumulator, char *current_buffer);
@@ -43,26 +42,26 @@ char *get_next_line(int fd)
 
 	while(current->fd != fd)
 		current = current->next;
-	
-
 	file_return = BUFFER_SIZE;
 	while (file_return > 0)
 	{
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
-		current_buffer[file_return] = '\0';
+		if (file_return < 0) {
+			free(current->buffer);
+			delete_fd(&accumulator, fd);
+			return (NULL);
+		}
+			current_buffer[file_return] = '\0';
 		
 		ft_join_accumulator(&(current->buffer), current_buffer);
 
-		if (ft_strchr(current->buffer, LETTER))
-			return ft_split_n(&current->buffer, ft_strchr(current->buffer, LETTER), file_return);
+		if (ft_strchr(current->buffer, '\n'))
+			return ft_split_n(&current->buffer, ft_strchr(current->buffer, '\n'), file_return);
 	}
-	
-
 	if(file_return == 0)
 	{
-		
 		if ((ft_strlen(current->buffer) > 0))
-			return ft_split_n(&current->buffer, ft_strchr(current->buffer, LETTER), file_return);
+			return ft_split_n(&current->buffer, ft_strchr(current->buffer, '\n'), file_return);
 		
 	}
 	free(current->buffer);
@@ -80,12 +79,10 @@ void delete_fd(struct list **accumulator, int fd)
 		previous = to_exclude;
 		to_exclude = to_exclude->next;
 	}
-
 	if ((*accumulator)->fd == fd)
 		(*accumulator) = to_exclude->next;
 	else
 		previous = to_exclude->next;
-		
 	free(to_exclude);
 }
 
@@ -99,7 +96,8 @@ void update_list(struct list **accumulator, int fd)
 	found = 0;
 	while ((current != NULL ))
 	{
-		if (fd == current->fd) {
+		if (fd == current->fd)
+		{
 			found = 1;
 			break;
 		}
@@ -127,9 +125,7 @@ void ft_join_accumulator(char **accumulator, char *current_buffer)
 	char *tmp_acc;
 
 	if (ft_strlen(current_buffer) == 0)
-	{
 		return;
-	}
 	tmp_acc = ft_strjoin(*accumulator, current_buffer);
 
 	free(*accumulator);
@@ -147,7 +143,7 @@ char *ft_split_n(char **accumulator, char *ptr_n, int file_return)
 	char *line;
 	char *rest;
 
-	if (file_return == 0 && !ft_strchr(*accumulator, LETTER))
+	if (file_return == 0 && !ft_strchr(*accumulator, '\n'))
 	{
 		line = malloc(ft_strlen(*accumulator) * sizeof(char) + 1);
 		ft_strlcpy(line, *accumulator, ft_strlen(*accumulator) + 1);
@@ -164,7 +160,6 @@ char *ft_split_n(char **accumulator, char *ptr_n, int file_return)
 	ft_strlcpy(line, *accumulator, length + 1);
 	ft_strlcpy(rest, (ptr_n + 1), ft_strlen(ptr_n));
 	free(*accumulator);
-
 
 	*accumulator = malloc(ft_strlen(rest) * sizeof(char) + 1);
 	ft_strlcpy(*accumulator, rest, ft_strlen(rest) + 1);
