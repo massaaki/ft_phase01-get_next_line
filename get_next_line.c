@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/08 20:18:39 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:28:24 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*get_next_line(int fd)
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		current_buffer[file_return] = '\0';
 		ft_join_accumulator(&accumulator, current_buffer);
-
 		if (ft_manage_split(&accumulator, &current_line, file_return) == 1)
 			return (current_line);
 	}
@@ -59,7 +58,7 @@ char	*ft_split_n(char **accumulator, int last_line)
 		{
 			line = malloc(i * sizeof(char) + 2);
 			ft_strlcpy(line, *accumulator, i + 2);
-			break;
+			break ;
 		}
 		else if (last_line == 1)
 		{
@@ -96,52 +95,35 @@ void	ft_join_accumulator(char **accumulator, char *current_buffer)
  */
 void	ft_keep_rest_accumulator(char **accumulator, int len, int i)
 {
-	char *temp_accumulator;
+	char	*temp_accumulator;
 
-	if (ft_strlen(*accumulator) == 0) {
-		return;
-	}
-	// printf("accumulator: '%s'\n", *accumulator);
-	// printf("length: '%ld'\n", ft_strlen(*accumulator));
-	
-
-	temp_accumulator = malloc((len - i) * sizeof(char) );
+	if (ft_strlen(*accumulator) == 0)
+		return ;
+	temp_accumulator = malloc((len - i) * sizeof(char));
 	ft_strlcpy(temp_accumulator, *(accumulator) + i + 1, (len - i));
-	// printf("temp_accumulator malloc: '%ld'\n", ((len - i) * sizeof(char)));
-	// printf("temp_accumulator: '%s'\n", temp_accumulator);
-
 	free(*accumulator);
-	
-	//Leak aqui
-	// printf("temp_accumulator: '%s'\n", temp_accumulator);
-	// printf("length to alloc: '%d'\n", ((len - i)));
-	// printf("---------------\n");
 	*accumulator = malloc((len - i) * sizeof(char));
 	ft_strlcpy(*accumulator, temp_accumulator, ft_strlen(temp_accumulator) + 1);
-	// printf("accumulator malloc: '%ld'\n", ((len - i) * sizeof(char)));
-	// printf("accumulator: '%s'\n", *accumulator);
-	// printf("acc length: '%ld'\n", ft_strlen(*accumulator));
-
 	free(temp_accumulator);
 }
 
 /*
-	* Manage split to call when is the eof or not
-	*/
-int ft_manage_split(char **accumulator, char **line, int file_return)
+* Manage split to call when is the eof or not
+*/
+int	ft_manage_split(char **accumulator, char **line, int file_return)
 {
-		char *ptr_n;
+	char	*ptr_n;
 
-		ptr_n = ft_strchr(*accumulator, '\n');
-		if (ptr_n)
-		{
-			*line = ft_split_n(accumulator, 0);
-			return (1);
-		}
-		else if ((file_return == 0 && ft_strlen(*accumulator) > 0))
-		{
-			*line = ft_split_n(accumulator, 1);
-			return (1);
-		}
-		return (0);
+	ptr_n = ft_strchr(*accumulator, '\n');
+	if (ptr_n)
+	{
+		*line = ft_split_n(accumulator, 0);
+		return (1);
+	}
+	else if ((file_return == 0 && ft_strlen(*accumulator) > 0))
+	{
+		*line = ft_split_n(accumulator, 1);
+		return (1);
+	}
+	return (0);
 }
