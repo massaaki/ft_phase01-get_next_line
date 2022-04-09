@@ -6,19 +6,18 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/09 16:10:56 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:25:01 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include<stdio.h>
 
 char	*get_next_line(int fd)
 {
-	char				current_buffer[BUFFER_SIZE + 1];
-	static struct list	*accumulator;
-	struct list			*c;
-	int					file_return;
+	char					current_buffer[BUFFER_SIZE + 1];
+	static struct s_list	*accumulator;
+	struct s_list			*c;
+	int						file_return;
 
 	c = ft_initialize(&accumulator, fd, &file_return);
 	if (c == NULL)
@@ -42,31 +41,31 @@ char	*get_next_line(int fd)
 	return (delete_fd(&accumulator, fd), NULL);
 }
 
-void	delete_fd(struct list **accumulator, int fd)
+void	delete_fd(struct s_list **acc, int fd)
 {
-	struct list		*to_exclude;
-	struct list		*previous;
+	struct s_list	*to_exclude;
+	struct s_list	*previous;
 
-	to_exclude = *accumulator;
+	to_exclude = *acc;
 	while (to_exclude->fd != fd)
 	{
 		previous = to_exclude;
 		to_exclude = to_exclude->next;
 	}
-	if ((*accumulator)->fd == fd)
-		(*accumulator) = to_exclude->next;
+	if ((*acc)->fd == fd)
+		(*acc) = to_exclude->next;
 	else
 		previous = to_exclude->next;
 	free(to_exclude);
 }
 
-void	update_list(struct list **accumulator, int fd)
+void	update_list(struct s_list **acc, int fd)
 {
-	struct list	*current;
-	struct list	*new;
-	int			found;
+	struct s_list	*current;
+	struct s_list	*new;
+	int				found;
 
-	current = (*accumulator);
+	current = (*acc);
 	found = 0;
 	while ((current != NULL ))
 	{
@@ -79,12 +78,12 @@ void	update_list(struct list **accumulator, int fd)
 	}
 	if (found == 0)
 	{
-		new = malloc(sizeof(struct list));
+		new = malloc(sizeof(struct s_list));
 		new->buf = malloc(sizeof(char));
 		new->buf[0] = '\0';
 		new->fd = fd;
-		new->next = (*accumulator);
-		(*accumulator) = new;
+		new->next = (*acc);
+		(*acc) = new;
 	}
 }
 
@@ -94,45 +93,45 @@ void	update_list(struct list **accumulator, int fd)
  * Then gets the correcty length
  * Finally realloc and copy correcty to avoid leaks
  */
-void	ft_join_accumulator(char **accumulator, char *current_buffer)
+void	ft_join_accumulator(char **acc, char *current_buffer)
 {
 	char	*tmp_acc;
 
 	if (ft_strlen(current_buffer) == 0)
 		return ;
-	tmp_acc = ft_strjoin(*accumulator, current_buffer);
-	free(*accumulator);
-	*accumulator = malloc(ft_strlen(tmp_acc) * sizeof(char) + 1);
-	ft_strlcpy(*accumulator, tmp_acc, ft_strlen(tmp_acc) + 1);
+	tmp_acc = ft_strjoin(*acc, current_buffer);
+	free(*acc);
+	*acc = malloc(ft_strlen(tmp_acc) * sizeof(char) + 1);
+	ft_strlcpy(*acc, tmp_acc, ft_strlen(tmp_acc) + 1);
 	free(tmp_acc);
 }
 
 /*
 * return line and update accumulator
 */
-char	*ft_split_n(char **accumulator, char *ptr_n, int file_return)
+char	*ft_split_n(char **acc, char *ptr_n, int file_return)
 {
 	int		length;
 	char	*line;
 	char	*rest;
 
-	if (file_return == 0 && !ft_strchr(*accumulator, '\n'))
+	if (file_return == 0 && !ft_strchr(*acc, '\n'))
 	{
-		line = malloc(ft_strlen(*accumulator) * sizeof(char) + 1);
-		ft_strlcpy(line, *accumulator, ft_strlen(*accumulator) + 1);
-		free(*accumulator);
-		*accumulator = malloc(sizeof(char));
-		*accumulator[0] = '\0';
+		line = malloc(ft_strlen(*acc) * sizeof(char) + 1);
+		ft_strlcpy(line, *acc, ft_strlen(*acc) + 1);
+		free(*acc);
+		*acc = malloc(sizeof(char));
+		*acc[0] = '\0';
 		return (line);
 	}
-	length = ptr_n - *accumulator + 1;
+	length = ptr_n - *acc + 1;
 	line = malloc(length * sizeof(char) + 1);
 	rest = malloc(ft_strlen(ptr_n) * sizeof(char));
-	ft_strlcpy(line, *accumulator, length + 1);
+	ft_strlcpy(line, *acc, length + 1);
 	ft_strlcpy(rest, (ptr_n + 1), ft_strlen(ptr_n));
-	free(*accumulator);
-	*accumulator = malloc(ft_strlen(rest) * sizeof(char) + 1);
-	ft_strlcpy(*accumulator, rest, ft_strlen(rest) + 1);
+	free(*acc);
+	*acc = malloc(ft_strlen(rest) * sizeof(char) + 1);
+	ft_strlcpy(*acc, rest, ft_strlen(rest) + 1);
 	free(rest);
 	return (line);
 }

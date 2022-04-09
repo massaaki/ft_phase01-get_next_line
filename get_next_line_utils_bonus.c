@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:55:57 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/09 15:39:29 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:24:33 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@
 * Initialize and check 
 */
 
-struct list *ft_initialize(struct list **accumulator, int fd, int *file_return)
+struct s_list	*ft_initialize(struct s_list **acc, int fd, int *file_return)
 {
-	struct list	*c;
+	struct s_list	*c;
 
 	if (fd < 0)
 		return (NULL);
-	if (!(*accumulator))
+	if (!(*acc))
 	{
-		(*accumulator) = malloc(sizeof(struct list));
-		(*accumulator)->buf = malloc(sizeof(char));
-		(*accumulator)->buf[0] = '\0';
-		(*accumulator)->fd = fd;
-		(*accumulator)->next = NULL;
+		(*acc) = malloc(sizeof(struct s_list));
+		(*acc)->buf = malloc(sizeof(char));
+		(*acc)->buf[0] = '\0';
+		(*acc)->fd = fd;
+		(*acc)->next = NULL;
 	}
 	else
-		update_list(accumulator, fd);
-	c = *accumulator;
+		update_list(acc, fd);
+	c = *acc;
 	while (c->fd != fd)
 		c = c->next;
 
