@@ -6,18 +6,15 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:55:57 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/09 16:24:33 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:42:46 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-
-
 /*
 * Initialize and check 
 */
-
 struct s_list	*ft_initialize(struct s_list **acc, int fd, int *file_return)
 {
 	struct s_list	*c;
@@ -37,7 +34,6 @@ struct s_list	*ft_initialize(struct s_list **acc, int fd, int *file_return)
 	c = *acc;
 	while (c->fd != fd)
 		c = c->next;
-
 	*file_return = BUFFER_SIZE;
 	return (c);
 }
@@ -91,8 +87,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	*(dst + i) = '\0';
 	return (ft_strlen(src));
 }
-
-
 
 /**
  * ft_strjoin
