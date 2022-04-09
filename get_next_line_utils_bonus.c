@@ -6,11 +6,41 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:55:57 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/05 21:57:03 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 15:39:29 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+
+
+/*
+* Initialize and check 
+*/
+
+struct list *ft_initialize(struct list **accumulator, int fd, int *file_return)
+{
+	struct list	*c;
+
+	if (fd < 0)
+		return (NULL);
+	if (!(*accumulator))
+	{
+		(*accumulator) = malloc(sizeof(struct list));
+		(*accumulator)->buf = malloc(sizeof(char));
+		(*accumulator)->buf[0] = '\0';
+		(*accumulator)->fd = fd;
+		(*accumulator)->next = NULL;
+	}
+	else
+		update_list(accumulator, fd);
+	c = *accumulator;
+	while (c->fd != fd)
+		c = c->next;
+
+	*file_return = BUFFER_SIZE;
+	return (c);
+}
 
 /*
  *	find the first ocurrency of 'c' and returns

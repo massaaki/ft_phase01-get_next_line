@@ -6,16 +6,12 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/09 15:17:20 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:10:56 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-void	update_list(struct list **accumulator, int fd);
-void	ft_join_accumulator(char **accumulator, char *current_buffer);
-void	delete_fd(struct list **accumulator, int fd);
-char	*ft_split_n(char **accumulator, char *ptr_n, int file_return);
+#include<stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -24,43 +20,26 @@ char	*get_next_line(int fd)
 	struct list			*c;
 	int					file_return;
 
-	if (fd < 0)
+	c = ft_initialize(&accumulator, fd, &file_return);
+	if (c == NULL)
 		return (NULL);
-	if (!accumulator)
-	{
-		accumulator = malloc(sizeof(struct list));
-		accumulator->buf = malloc(sizeof(char));
-		accumulator->buf[0] = '\0';
-		accumulator->fd = fd;
-		accumulator->next = NULL;
-	}
-	else
-		update_list(&accumulator, fd);
-	c = accumulator;
-	while (c->fd != fd)
-		c = c->next;
-	file_return = BUFFER_SIZE;
 	while (file_return > 0)
 	{
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		if (file_return < 0)
 		{
 			free(c->buf);
-			delete_fd(&accumulator, fd);
-			return (NULL);
+			return ((delete_fd(&accumulator, fd)), NULL);
 		}
 		current_buffer[file_return] = '\0';
 		ft_join_accumulator(&(c->buf), current_buffer);
 		if (ft_strchr(c->buf, '\n'))
 			return (ft_split_n(&c->buf, ft_strchr(c->buf, '\n'), file_return));
 	}
-	if (file_return == 0)
-		if ((ft_strlen(c->buf) > 0))
-			return (ft_split_n(&c->buf, ft_strchr(c->buf, '\n'), file_return));
-
+	if ((file_return == 0) && (ft_strlen(c->buf) > 0))
+		return (ft_split_n(&c->buf, ft_strchr(c->buf, '\n'), file_return));
 	free(c->buf);
-	delete_fd(&accumulator, fd);
-	return (NULL);
+	return (delete_fd(&accumulator, fd), NULL);
 }
 
 void	delete_fd(struct list **accumulator, int fd)
