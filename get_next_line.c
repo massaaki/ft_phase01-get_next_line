@@ -6,19 +6,16 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/08 18:48:10 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/08 20:18:39 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*ft_split_n(char **accumulator, int last_line);
 void	ft_join_accumulator(char **accumulator, char *current_buffer);
 void	ft_keep_rest_accumulator(char **accumulator, int len, int i);
 int		ft_manage_split(char **accumulator, char **current, int file_return);
-
-int test = 0;
 
 char	*get_next_line(int fd)
 {
@@ -143,7 +140,6 @@ int ft_manage_split(char **accumulator, char **line, int file_return)
 		}
 		else if ((file_return == 0 && ft_strlen(*accumulator) > 0))
 		{
-			test = 1;
 			*line = ft_split_n(accumulator, 1);
 			return (1);
 		}
