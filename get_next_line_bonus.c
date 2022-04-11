@@ -6,11 +6,12 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 16:14:30 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:54:09 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -50,15 +51,18 @@ void	delete_fd(struct s_list **acc, int fd)
 	struct s_list	*previous;
 
 	to_exclude = *acc;
+	previous = NULL;
 	while (to_exclude->fd != fd)
 	{
 		previous = to_exclude;
 		to_exclude = to_exclude->next;
 	}
-	if ((*acc)->fd == fd)
+
+	//exclude from begining
+	if (to_exclude == (*acc))
 		(*acc) = to_exclude->next;
-	else
-		previous = to_exclude->next;
+	else 
+		previous->next = to_exclude->next;
 	free(to_exclude);
 }
 
@@ -70,7 +74,7 @@ void	update_list(struct s_list **acc, int fd)
 
 	current = (*acc);
 	found = 0;
-	while ((current != NULL ))
+	while (current != NULL)
 	{
 		if (fd == current->fd)
 		{
