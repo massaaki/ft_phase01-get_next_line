@@ -104,4 +104,9 @@ cc get_next_line.o get_next_line_utils.o main.c -g
 valgrind --leak-check=full ./a.out
 ```
 
+<br/>
 
+<h1 align="center">Example call</h1>
+<p align="center">
+<img src="./images/gnl-example-call.png"/>
+</p>
