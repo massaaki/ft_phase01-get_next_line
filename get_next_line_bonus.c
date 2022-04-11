@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/09 16:25:01 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:14:30 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	char					current_buffer[BUFFER_SIZE + 1];
+	char					*current_buffer;
 	static struct s_list	*accumulator;
 	struct s_list			*c;
 	int						file_return;
@@ -24,14 +24,17 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (file_return > 0)
 	{
+		current_buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		if (file_return < 0)
 		{
 			free(c->buf);
+			free(current_buffer);
 			return ((delete_fd(&accumulator, fd)), NULL);
 		}
 		current_buffer[file_return] = '\0';
 		ft_join_accumulator(&(c->buf), current_buffer);
+		free(current_buffer);
 		if (ft_strchr(c->buf, '\n'))
 			return (ft_split_n(&c->buf, ft_strchr(c->buf, '\n'), file_return));
 	}
