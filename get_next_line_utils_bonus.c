@@ -6,14 +6,15 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:55:57 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 17:54:27 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:17:51 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
 /*
-* Initialize list of FDs, create if necessary and return the address of current fd
+* Initialize list of FDs, create if necessary and return the 
+* address of current fd
 */
 struct s_list	*ft_initialize(struct s_list **acc, int fd, int *file_return)
 {
