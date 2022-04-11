@@ -6,23 +6,23 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 12:45:03 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 13:14:28 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *ft_split_n(char **accumulator, int last_line);
-void ft_join_accumulator(char **accumulator, char *current_buffer);
-void ft_keep_rest_accumulator(char **accumulator, int len, int i);
-int ft_manage_split(char **accumulator, char **current, int file_return);
+char	*ft_split_n(char **accumulator, int last_line);
+void	ft_join_accumulator(char **accumulator, char *current_buffer);
+void	ft_keep_rest_accumulator(char **accumulator, int len, int i);
+int		ft_manage_split(char **accumulator, char **current, int file_return);
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *current_buffer;
-	int file_return;
-	static char *accumulator;
-	char *current_line;
+	char			*current_buffer;
+	int				file_return;
+	static char		*accumulator;
+	char			*current_line;
 
 	if (!accumulator)
 		accumulator = ft_strdup("");
@@ -50,11 +50,11 @@ char *get_next_line(int fd)
  * Receive accumulator and if is last line or not
  * returns current_line and update accumulator with rest
  */
-char *ft_split_n(char **accumulator, int last_line)
+char	*ft_split_n(char **accumulator, int last_line)
 {
-	char *line;
-	int len;
-	int i;
+	char	*line;
+	int		len;
+	int		i;
 
 	i = 0;
 	len = ft_strlen(*accumulator);
@@ -64,7 +64,7 @@ char *ft_split_n(char **accumulator, int last_line)
 		{
 			line = malloc(i * sizeof(char) + 2);
 			ft_strlcpy(line, *accumulator, i + 2);
-			break;
+			break ;
 		}
 		else if (last_line == 1)
 		{
@@ -85,9 +85,9 @@ char *ft_split_n(char **accumulator, int last_line)
  * Then gets the correcty length
  * Finally realloc and copy correcty to avoid leaks
  */
-void ft_join_accumulator(char **accumulator, char *current_buffer)
+void	ft_join_accumulator(char **accumulator, char *current_buffer)
 {
-	char *tmp_acc;
+	char	*tmp_acc;
 
 	tmp_acc = ft_strjoin(*accumulator, current_buffer);
 	free(*accumulator);
@@ -99,12 +99,12 @@ void ft_join_accumulator(char **accumulator, char *current_buffer)
 /*
  * Remove content before \n and realoc the rest in accumulator
  */
-void ft_keep_rest_accumulator(char **accumulator, int len, int i)
+void	ft_keep_rest_accumulator(char **accumulator, int len, int i)
 {
-	char *temp_accumulator;
+	char	*temp_accumulator;
 
 	if (ft_strlen(*accumulator) == 0)
-		return;
+		return ;
 	temp_accumulator = malloc((len - i) * sizeof(char));
 	ft_strlcpy(temp_accumulator, *(accumulator) + i + 1, (len - i));
 	free(*accumulator);
@@ -116,9 +116,9 @@ void ft_keep_rest_accumulator(char **accumulator, int len, int i)
 /*
  * Manage split to call when is the eof or not
  */
-int ft_manage_split(char **accumulator, char **line, int file_return)
+int	ft_manage_split(char **accumulator, char **line, int file_return)
 {
-	char *ptr_n;
+	char	*ptr_n;
 
 	ptr_n = ft_strchr(*accumulator, '\n');
 	if (ptr_n)
