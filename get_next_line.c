@@ -6,44 +6,36 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 13:14:28 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:43:02 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 char	*ft_split_n(char **accumulator, int last_line);
-void	ft_join_accumulator(char **accumulator, char *current_buffer);
+int		ft_join_accumulator(char **accumulator, int fd, int *file_return);
 void	ft_keep_rest_accumulator(char **accumulator, int len, int i);
 int		ft_manage_split(char **accumulator, char **current, int file_return);
 
 char	*get_next_line(int fd)
 {
-	char			*current_buffer;
-	int				file_return;
 	static char		*accumulator;
 	char			*current_line;
+	int				file_return;
 
 	if (!accumulator)
 		accumulator = ft_strdup("");
 	file_return = BUFFER_SIZE;
 	while (file_return > 0 || ft_strchr(accumulator, '\n'))
 	{
-		current_buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
-		file_return = read(fd, current_buffer, BUFFER_SIZE);
-		if (file_return < 0)
-		{
-			free(current_buffer);
+		if (ft_join_accumulator(&accumulator, fd, &file_return) == 0)
 			return (NULL);
-		}
-		current_buffer[file_return] = '\0';
-		ft_join_accumulator(&accumulator, current_buffer);
-		free(current_buffer);
+
 		if (ft_manage_split(&accumulator, &current_line, file_return) == 1)
 			return (current_line);
 	}
-	free(accumulator);
-	return ((accumulator = NULL), NULL);
+
+	return ((free(accumulator)), (accumulator = NULL), NULL);
 }
 
 /*
@@ -85,15 +77,31 @@ char	*ft_split_n(char **accumulator, int last_line)
  * Then gets the correcty length
  * Finally realloc and copy correcty to avoid leaks
  */
-void	ft_join_accumulator(char **accumulator, char *current_buffer)
+int	ft_join_accumulator(char **accumulator, int fd, int *file_return)
 {
 	char	*tmp_acc;
+	char	*current_buffer;
+
+	current_buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
+	*file_return = read(fd, current_buffer, BUFFER_SIZE);
+	if (file_return < 0)
+	{
+		if (accumulator != NULL)
+		{
+			free(accumulator);
+			accumulator = NULL;
+		}
+		return (free(current_buffer), 0);
+	}
+	current_buffer[*file_return] = '\0';
 
 	tmp_acc = ft_strjoin(*accumulator, current_buffer);
 	free(*accumulator);
+	free(current_buffer);
 	*accumulator = malloc(ft_strlen(tmp_acc) * sizeof(char) + 1);
 	ft_strlcpy(*accumulator, tmp_acc, ft_strlen(tmp_acc) + 1);
 	free(tmp_acc);
+	return (1);
 }
 
 /*
