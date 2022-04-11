@@ -6,12 +6,11 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 15:12:14 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 15:18:54 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*ft_split_n(char **accumulator, int last_line);
 int		ft_join_accumulator(char **accumulator, int fd);
