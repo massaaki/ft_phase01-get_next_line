@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 17:54:09 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:03:03 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ char	*get_next_line(int fd)
 		current_buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
 		if (file_return < 0)
-		{
-			free(c->buf);
-			free(current_buffer);
-			return ((delete_fd(&accumulator, fd)), NULL);
-		}
+			return (free(c->buf), free(current_buffer), \
+			(delete_fd(&accumulator, fd)), NULL);
 		current_buffer[file_return] = '\0';
 		ft_join_accumulator(&(c->buf), current_buffer);
 		free(current_buffer);
@@ -41,8 +38,7 @@ char	*get_next_line(int fd)
 	}
 	if ((file_return == 0) && (ft_strlen(c->buf) > 0))
 		return (ft_split_n(&c->buf, ft_strchr(c->buf, '\n'), file_return));
-	free(c->buf);
-	return (delete_fd(&accumulator, fd), NULL);
+	return ((free(c->buf)), delete_fd(&accumulator, fd), NULL);
 }
 
 void	delete_fd(struct s_list **acc, int fd)
@@ -57,11 +53,9 @@ void	delete_fd(struct s_list **acc, int fd)
 		previous = to_exclude;
 		to_exclude = to_exclude->next;
 	}
-
-	//exclude from begining
 	if (to_exclude == (*acc))
 		(*acc) = to_exclude->next;
-	else 
+	else
 		previous->next = to_exclude->next;
 	free(to_exclude);
 }
