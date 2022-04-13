@@ -6,14 +6,13 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:53:22 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/09 16:18:34 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/13 20:32:24 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 
