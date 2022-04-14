@@ -6,16 +6,11 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/14 09:47:44 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:43:59 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_split_n(char **accumulator, int last_line);
-int		ft_join_accumulator(char **accumulator, int fd);
-void	ft_keep_rest_accumulator(char **accumulator, int len, int i);
-int		ft_manage_split(char **accumulator, char **current, int file_return);
 
 char	*get_next_line(int fd)
 {
@@ -82,6 +77,8 @@ int	ft_join_accumulator(char **accumulator, int fd)
 	char	*current_buffer;
 	int		file_return;
 
+	if (BUFFER_SIZE <= 0)
+		return (-1);
 	current_buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
 	file_return = read(fd, current_buffer, BUFFER_SIZE);
 	if (file_return < 0)
