@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 15:18:54 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/14 09:47:44 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_next_line(int fd)
 
 	if (!accumulator)
 		accumulator = ft_strdup("");
-	file_return = 1;
+	file_return = BUFFER_SIZE;
 	while (file_return > 0 || ft_strchr(accumulator, '\n'))
 	{
 		file_return = ft_join_accumulator(&accumulator, fd);
