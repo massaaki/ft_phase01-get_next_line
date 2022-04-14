@@ -11,6 +11,13 @@
 <p align="center">Function that returns a line read from a file descriptor: we should be
 able to call getNextLine(int fd) multiple times and returns one line at a time. If some error occur or EOF is reached, return NULL.</p>
 
+
+<h2>Useful Links</h2>
+<ul>
+<li><a href="https://github.com/massaaki/42School-progress/tree/main/00-study-reference/02-get-next-line/Tests">My Test files</a></li>
+<li><a href="https://github.com/Tripouille/gnlTester">Tripouille Tests</a></li>
+</ul>
+
 <h2>Learned concepts</h2>
 <ul>
 <li>Static Variables</li>
