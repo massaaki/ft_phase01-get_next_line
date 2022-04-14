@@ -2,7 +2,7 @@
 <p align="center">
 <img src="./images/gnl-logo.png" />
 </p>
-<h1 align="center">Get Next Line (affectionately called GNL) </h1>
+<h1 align="center">Get Next Line (GNL) </h1>
 <p align="center">
 <img src="https://img.shields.io/badge/Mandatory-OK-brightgreen"/>
 <img src="https://img.shields.io/badge/Bonus-OK-brightgreen"/>
