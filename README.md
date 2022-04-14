@@ -22,7 +22,7 @@ able to call getNextLine(int fd) multiple times and returns one line at a time.<
 
 <br/>
 
-<h1 align="center">Flow Diagram</h1>
+<h1 align="center">Flow Diagram(Mandatory)</h1>
 <p align="center">
 <img src="./images/gnl-diagram.png"/>
 </p>
@@ -109,4 +109,16 @@ valgrind --leak-check=full ./a.out
 <h1 align="center">Example call</h1>
 <p align="center">
 <img src="./images/gnl-example-call.png"/>
+</p>
+
+
+<br/>
+
+<h1 align="center">Flow Diagram(BONUS)</h1>
+<p align="center">The bonus part is to create a new function that can receive multiples File Descriptors, in my
+solution, I created a linked list and before start to find '\n', the application traversse to all nodes, create(if necessary)
+a new node if FD does not exists and return a pointer to the correspondent FD, after that, the solution is pretty similar then
+mandatory part.</p>
+<p align="center">
+<img src="./images/gnl-diagram_bonus.png"/>
 </p>
