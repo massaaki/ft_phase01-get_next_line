@@ -6,12 +6,11 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 18:03:03 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:49:45 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -21,9 +20,9 @@ char	*get_next_line(int fd)
 	int						file_return;
 
 	c = ft_initialize(&accumulator, fd, &file_return);
-	if (c == NULL)
+	if (c == NULL || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (file_return > 0)
+	while (file_return > 0 && BUFFER_SIZE > 0)
 	{
 		current_buffer = malloc(BUFFER_SIZE * sizeof(char) + 1);
 		file_return = read(fd, current_buffer, BUFFER_SIZE);
@@ -41,6 +40,9 @@ char	*get_next_line(int fd)
 	return ((free(c->buf)), delete_fd(&accumulator, fd), NULL);
 }
 
+/*
+ * Traverse all nodes until find fd && delete then
+*/
 void	delete_fd(struct s_list **acc, int fd)
 {
 	struct s_list	*to_exclude;
@@ -60,6 +62,10 @@ void	delete_fd(struct s_list **acc, int fd)
 	free(to_exclude);
 }
 
+/*
+ * update **acc with node corresponding to fd passed
+ * if fd doesnt exists, create a new one
+*/
 void	update_list(struct s_list **acc, int fd)
 {
 	struct s_list	*current;

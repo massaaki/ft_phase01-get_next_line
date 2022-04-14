@@ -6,7 +6,7 @@
 /*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:55:57 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/11 18:17:51 by massaaki         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:49:59 by massaaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ struct s_list	*ft_initialize(struct s_list **acc, int fd, int *file_return)
 {
 	struct s_list	*c;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!(*acc))
 	{
