@@ -9,7 +9,7 @@
 <img src="https://img.shields.io/badge/Final%20Score-100-blue"/>
 </p>
 <p align="center">Function that returns a line read from a file descriptor: we should be
-able to call getNextLine(int fd) multiple times and returns one line at a time.</p>
+able to call getNextLine(int fd) multiple times and returns one line at a time. If some error occur or EOF is reached, return NULL.</p>
 
 <h2>Learned concepts</h2>
 <ul>
@@ -18,6 +18,21 @@ able to call getNextLine(int fd) multiple times and returns one line at a time.<
 <li>Memory allocation</li>
 <li>Analyse and Avoid Memory Leaks</li>
 <li>Linked Lists (used in bonus part)</li>
+</ul>
+
+<h2>Use cases to consider</h2>
+<ul>
+<li>BUFFER_SIZE=1</li>
+<li>BUFFER_SIZE=42</li>
+<li>BUFFER_SIZE=1000000</li>
+<li>BUFFER_SIZE=-32</li>
+<li>FD VALID</li>
+<li>FD Invalid</li>
+<li>FD Empty</li>
+<li>FD Multiple lines</li>
+<li>FD Single line</li>
+<li>FD with only multiples '\n'</li>
+<li>After reach EOF, verify if has something in accumulator</li>
 </ul>
 
 <br/>
