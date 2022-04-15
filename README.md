@@ -144,3 +144,9 @@ mandatory part.</p>
 <p align="center">
 <img src="./images/gnl-diagram_bonus.png"/>
 </p>
+
+<br/>
+<br/>
+
+<h1>License</h1>
+<p>This project(Get Next Line) is <a href="https://github.com/massaaki/massaaki/blob/main/license/mit">MTI Licensed</a></p>
