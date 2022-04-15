@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: massaaki <massaaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmassaak <mmassaak@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/27 16:10:12 by massaaki          #+#    #+#             */
-/*   Updated: 2022/04/14 14:49:45 by massaaki         ###   ########.fr       */
+/*   Created: 2022/03/27 16:10:12 by mmassaak          #+#    #+#             */
+/*   Updated: 2022/04/15 12:05:26 by mmassaak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
